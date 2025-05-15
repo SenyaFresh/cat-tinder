@@ -21,9 +21,15 @@ class CatScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.list),
             onPressed: () {
+              final catBloc = context.read<CatBloc>();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const LikedCatsScreen()),
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider.value(
+                    value: catBloc,
+                    child: const LikedCatsScreen(),
+                  ),
+                ),
               );
             },
           ),

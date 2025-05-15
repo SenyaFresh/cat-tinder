@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:project/domain/usecases/remove_liked_cat.dart';
 import 'package:project/domain/usecases/save_liked_cat.dart';
 
 import '../../domain/events/cat_event.dart';
@@ -8,6 +9,7 @@ import '../../domain/usecases/fetch_random_cat.dart';
 class CatBloc extends Bloc<CatEvent, CatState> {
   final FetchRandomCat fetchRandomCat;
   final SaveLikedCat saveLikedCat;
+  final RemoveLikedCat removeLikedCat;
   int _likeCount = 0;
 
   Future<void> _onLoadCat(LoadCatEvent event, Emitter<CatState> emit) async {
@@ -33,9 +35,19 @@ class CatBloc extends Bloc<CatEvent, CatState> {
     add(LoadCatEvent());
   }
 
-  CatBloc(this.fetchRandomCat, this.saveLikedCat) : super(CatInitial()) {
+  void _onRemoveLikedCat(RemoveLikedCatEvent event, Emitter<CatState> emit) {
+    removeLikedCat(event.cat);
+    _likeCount--;
+    final current = state;
+    if (current is CatLoaded) {
+      emit(CatLoaded(cat: current.cat, likeCount: _likeCount));
+    }
+  }
+
+  CatBloc(this.fetchRandomCat, this.saveLikedCat, this.removeLikedCat) : super(CatInitial()) {
     on<LoadCatEvent>(_onLoadCat);
     on<LikeCatEvent>(_onLikeCat);
     on<DislikeCatEvent>(_onDislikeCat);
+    on<RemoveLikedCatEvent>(_onRemoveLikedCat);
   }
 }

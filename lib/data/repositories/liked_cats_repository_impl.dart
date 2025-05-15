@@ -11,4 +11,7 @@ class LikedCatsRepositoryImpl implements LikedCatsRepository {
 
   @override
   List<Cat> getLikedCats() => List.unmodifiable(_liked);
+
+  @override
+  void removeLikedCat(Cat cat) => _liked.remove(cat);
 }

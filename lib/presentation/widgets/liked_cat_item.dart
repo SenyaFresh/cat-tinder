@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/cat.dart';
+import '../../domain/events/cat_event.dart';
+import '../blocs/cat_bloc.dart';
 
 class LikedCatItem extends StatelessWidget {
   final Cat cat;
@@ -38,6 +41,12 @@ class LikedCatItem extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
+        ),
+        IconButton(
+          icon: Icon(Icons.close, color: Colors.black),
+          onPressed: () {
+            context.read<CatBloc>().add(RemoveLikedCatEvent(cat));
+          },
         ),
       ],
     );

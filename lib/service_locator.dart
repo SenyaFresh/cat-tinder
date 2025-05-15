@@ -8,6 +8,7 @@ import 'domain/events/cat_event.dart';
 import 'domain/repositories/liked_cats_repository.dart';
 import 'domain/usecases/fetch_random_cat.dart';
 import 'domain/usecases/get_liked_cats.dart';
+import 'domain/usecases/remove_liked_cat.dart';
 import 'domain/usecases/save_liked_cat.dart';
 import 'presentation/blocs/cat_bloc.dart';
 
@@ -35,12 +36,18 @@ void setupServiceLocator() {
   sl.registerLazySingleton<SaveLikedCat>(
     () => SaveLikedCat(sl<LikedCatsRepository>()),
   );
+
   sl.registerLazySingleton<GetLikedCats>(
     () => GetLikedCats(sl<LikedCatsRepository>()),
   );
 
+  sl.registerLazySingleton<RemoveLikedCat>(
+    () => RemoveLikedCat(sl<LikedCatsRepository>()),
+  );
+
   sl.registerFactory<CatBloc>(
     () =>
-        CatBloc(sl<FetchRandomCat>(), sl<SaveLikedCat>())..add(LoadCatEvent()),
+        CatBloc(sl<FetchRandomCat>(), sl<SaveLikedCat>(), sl<RemoveLikedCat>())
+          ..add(LoadCatEvent()),
   );
 }
