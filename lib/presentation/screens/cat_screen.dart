@@ -54,7 +54,7 @@ class CatScreen extends StatelessWidget {
                         ),
                       ),
                   onHorizontalDragEnd: (details) {
-                    if (details.primaryVelocity! < 0) {
+                    if (details.primaryVelocity! > 0) {
                       context.read<CatBloc>().add(DislikeCatEvent());
                     } else {
                       context.read<CatBloc>().add(LikeCatEvent());
