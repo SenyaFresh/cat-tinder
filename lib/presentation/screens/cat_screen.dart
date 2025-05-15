@@ -94,7 +94,7 @@ class CatScreen extends StatelessWidget {
               ],
             );
           } else if (state is CatError) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
+            Future.microtask(() {
               showDialog(
                 context: context,
                 barrierDismissible: true,
