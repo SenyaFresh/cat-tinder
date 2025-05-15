@@ -25,17 +25,13 @@ class CatImageWidget extends StatelessWidget {
                   errorWidget:
                       (context, url, error) => Container(
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                        ),
+                        decoration: BoxDecoration(color: Colors.grey[300]),
                         child: Icon(Icons.error, size: 50, color: Colors.red),
                       ),
                 )
                 : Container(
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                  ),
+                  decoration: BoxDecoration(color: Colors.grey[300]),
                   child: CircularProgressIndicator(),
                 ),
       ),

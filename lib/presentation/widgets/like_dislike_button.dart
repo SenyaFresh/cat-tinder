@@ -24,9 +24,7 @@ class LikeDislikeButton extends StatelessWidget {
           border: Border.all(color: Colors.black, width: 2),
           color: Colors.white,
         ),
-        child: Center(
-          child: Icon(icon, size: 30, color: color),
-        ),
+        child: Center(child: Icon(icon, size: 30, color: color)),
       ),
     );
   }

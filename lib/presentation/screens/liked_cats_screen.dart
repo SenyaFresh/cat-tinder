@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import '../../domain/entities/cat.dart';
+import '../../domain/usecases/get_liked_cats.dart';
+import '../widgets/liked_cat_item.dart';
+import '../../service_locator.dart';
+
+class LikedCatsScreen extends StatelessWidget {
+  const LikedCatsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Cat> likedCats = sl<GetLikedCats>()();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Liked Cats'),
+      ),
+      body: likedCats.isEmpty
+          ? const Center(child: Text('Пока нет лайкнутых кошек'))
+          : ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: likedCats.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: LikedCatItem(cat: likedCats[index]),
+          );
+        },
+      ),
+    );
+  }
+}
