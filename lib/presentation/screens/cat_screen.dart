@@ -25,10 +25,11 @@ class CatScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => BlocProvider.value(
-                    value: catBloc,
-                    child: const LikedCatsScreen(),
-                  ),
+                  builder:
+                      (context) => BlocProvider.value(
+                        value: catBloc,
+                        child: const LikedCatsScreen(),
+                      ),
                 ),
               );
             },

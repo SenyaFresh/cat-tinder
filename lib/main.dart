@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/presentation/blocs/cat_bloc.dart';
 import 'package:project/service_locator.dart';
+
 import 'presentation/screens/cat_screen.dart';
 
 void main() {

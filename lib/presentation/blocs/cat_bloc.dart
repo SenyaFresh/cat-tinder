@@ -44,7 +44,8 @@ class CatBloc extends Bloc<CatEvent, CatState> {
     }
   }
 
-  CatBloc(this.fetchRandomCat, this.saveLikedCat, this.removeLikedCat) : super(CatInitial()) {
+  CatBloc(this.fetchRandomCat, this.saveLikedCat, this.removeLikedCat)
+    : super(CatInitial()) {
     on<LoadCatEvent>(_onLoadCat);
     on<LikeCatEvent>(_onLikeCat);
     on<DislikeCatEvent>(_onDislikeCat);

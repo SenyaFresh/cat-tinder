@@ -10,12 +10,8 @@ class CatLoaded extends CatState {
   final Cat cat;
   final int likeCount;
 
-  CatLoaded({
-    required this.cat,
-    required this.likeCount,
-  });
+  CatLoaded({required this.cat, required this.likeCount});
 }
-
 
 class CatError extends CatState {
   final String message;

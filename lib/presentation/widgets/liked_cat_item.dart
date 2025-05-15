@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../domain/entities/cat.dart';
 import '../../domain/events/cat_event.dart';
 import '../blocs/cat_bloc.dart';
@@ -25,10 +26,11 @@ class LikedCatItem extends StatelessWidget {
             child: Image.network(
               cat.imageUrl,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
-                color: Colors.grey[300],
-                child: const Icon(Icons.error, color: Colors.red, size: 40),
-              ),
+              errorBuilder:
+                  (_, __, ___) => Container(
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.error, color: Colors.red, size: 40),
+                  ),
             ),
           ),
         ),
@@ -36,10 +38,7 @@ class LikedCatItem extends StatelessWidget {
         Expanded(
           child: Text(
             cat.breedName,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
         ),
         IconButton(

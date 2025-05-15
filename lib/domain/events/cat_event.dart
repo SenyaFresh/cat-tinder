@@ -10,5 +10,6 @@ class DislikeCatEvent extends CatEvent {}
 
 class RemoveLikedCatEvent extends CatEvent {
   final Cat cat;
+
   RemoveLikedCatEvent(this.cat);
 }
