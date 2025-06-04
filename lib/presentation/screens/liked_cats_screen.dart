@@ -17,10 +17,22 @@ class LikedCatsScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Liked Cats')),
       body: BlocBuilder<CatBloc, CatState>(
         builder: (context, state) {
-          final List<Cat> likedCats = sl<GetLikedCats>()();
-          return likedCats.isEmpty
-              ? const Center(child: Text('Пока нет лайкнутых котиков('))
-              : ListView.builder(
+          return FutureBuilder<List<Cat>>(
+            future: sl<GetLikedCats>()(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text('Ошибка при загрузке лайков('));
+              }
+              final List<Cat> likedCats = snapshot.data ?? [];
+
+              if (likedCats.isEmpty) {
+                return const Center(child: Text('Пока нет лайкнутых котиков('));
+              }
+
+              return ListView.builder(
                 padding: const EdgeInsets.all(16),
                 itemCount: likedCats.length,
                 itemBuilder: (context, index) {
@@ -30,6 +42,8 @@ class LikedCatsScreen extends StatelessWidget {
                   );
                 },
               );
+            },
+          );
         },
       ),
     );

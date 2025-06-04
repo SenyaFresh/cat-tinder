@@ -6,7 +6,7 @@ class GetLikedCats {
 
   GetLikedCats(this.repository);
 
-  List<Cat> call() {
+  Future<List<Cat>> call() {
     return repository.getLikedCats();
   }
 }
