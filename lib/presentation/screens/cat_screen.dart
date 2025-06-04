@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,8 +12,60 @@ import '../widgets/like_dislike_button.dart';
 import 'cat_detail_screen.dart';
 import 'liked_cats_screen.dart';
 
-class CatScreen extends StatelessWidget {
+class CatScreen extends StatefulWidget {
   const CatScreen({super.key});
+
+  @override
+  State<CatScreen> createState() => _CatScreenState();
+}
+
+class _CatScreenState extends State<CatScreen> {
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  final Connectivity _connectivity = Connectivity();
+  bool _isOffline = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen((
+      result,
+    ) {
+      if (result == ConnectivityResult.none) {
+        if (!_isOffline) {
+          _isOffline = true;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Нет подключения к интернету'),
+              backgroundColor: Colors.red,
+              duration: Duration(
+                seconds: 5,
+              ),
+            ),
+          );
+        }
+      } else {
+        if (_isOffline) {
+          _isOffline = false;
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Соединение восстановлено'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +91,22 @@ class CatScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<CatBloc, CatState>(
+      body: BlocConsumer<CatBloc, CatState>(
+        listener: (context, state) {
+          if (state is CatError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Не удалось загрузить котика('),
+                action: SnackBarAction(
+                  label: 'Перезагрузить',
+                  onPressed: () {
+                    context.read<CatBloc>().add(LoadCatEvent());
+                  },
+                ),
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           if (state is CatLoading) {
             return Center(child: CircularProgressIndicator());
@@ -94,28 +164,7 @@ class CatScreen extends StatelessWidget {
               ],
             );
           } else if (state is CatError) {
-            Future.microtask(() {
-              showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext dialogContext) {
-                  return AlertDialog(
-                    title: Text('Ошибка'),
-                    content: Text('Не удалось загрузить котика('),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          context.read<CatBloc>().add(LoadCatEvent());
-                          Navigator.of(dialogContext).pop();
-                        },
-                        child: Text('Перезагрузить'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            });
-            return Center(child: Text('Ошибка'));
+            return Center(child: Text('Ошибка при загрузке котика'));
           } else {
             return const SizedBox.shrink();
           }
