@@ -7,10 +7,19 @@ import '../../domain/repositories/liked_cats_repository.dart';
 
 class LikedCatsRepositoryImpl implements LikedCatsRepository {
   static const String _keyLikedCats = 'liked_cats';
+  final SharedPreferences? _prefsForTest;
+
+  LikedCatsRepositoryImpl({SharedPreferences? prefs}) : _prefsForTest = prefs;
+
+  LikedCatsRepositoryImpl.forTest(SharedPreferences prefs)
+      : _prefsForTest = prefs;
+
+  Future<SharedPreferences> get _prefs async =>
+      _prefsForTest ?? await SharedPreferences.getInstance();
 
   @override
   Future<void> saveLikedCat(Cat cat) async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await _prefs;
 
     final List<String> currentList =
         prefs.getStringList(_keyLikedCats) ?? <String>[];
@@ -30,7 +39,7 @@ class LikedCatsRepositoryImpl implements LikedCatsRepository {
 
   @override
   Future<List<Cat>> getLikedCats() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await _prefs;
     final List<String>? encodedList = prefs.getStringList(_keyLikedCats);
 
     if (encodedList == null || encodedList.isEmpty) {
@@ -45,7 +54,7 @@ class LikedCatsRepositoryImpl implements LikedCatsRepository {
 
   @override
   Future<void> removeLikedCat(Cat cat) async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await _prefs;
     final List<String>? encodedList = prefs.getStringList(_keyLikedCats);
 
     if (encodedList == null || encodedList.isEmpty) {
