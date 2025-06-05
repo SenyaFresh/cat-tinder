@@ -38,9 +38,7 @@ class _CatScreenState extends State<CatScreen> {
             SnackBar(
               content: Text('Нет подключения к интернету'),
               backgroundColor: Colors.red,
-              duration: Duration(
-                seconds: 5,
-              ),
+              duration: Duration(seconds: 5),
             ),
           );
         }

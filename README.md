@@ -7,7 +7,7 @@
 
 ## Установка
 
-Скачать и установить APK-файл по ссылке: https://disk.yandex.ru/d/auapJboprUKicQ
+Скачать и установить APK-файл по ссылке: https://disk.360.yandex.ru/d/vSpnIcZ7VgEoKw
 
 ## Функционал
 
@@ -28,9 +28,18 @@
   - кнопка удаления котика из списка лайкнутых
 - Кнопка назад, чтобы вернуться на главный экран
 
+### Работа оффлайн
+- При потери соединения появляется снекбар об ошибке, при возвращении соединения появляется снекбар о восстановлении
+- Изображения котиков кешируются и показываются без сети
+- Интерфейс не блокируется
+
+### Хранилище
+- Котики сохраняются в памяти устройства даже при выходе из приложения
 
 <img src="assets/main_screen.png" alt="Main" width="200" title="Главный экран"/>
 <img src="assets/description.png" alt="Description" width="200" title="Описание"/>
 <img src="assets/liked_cats.png" alt="Description" width="200" title="Список лайкнутых котиков"/>
 <img src="assets/loading.png" alt="Loading" width="200" title="Загрузка"/>
-<img src="assets/error.png" alt="Error" width="200" title="Ошибка"/>
+<img src="assets/cant_download.png" alt="Error" width="200" title="Не удалось загрузить"/>
+<img src="assets/no_internet.png" alt="Error" width="200" title="Потеряно соединение"/>
+<img src="assets/has_internet.png" alt="Error" width="200" title="Соединение восстановлено"/>

@@ -12,7 +12,7 @@ class LikedCatsRepositoryImpl implements LikedCatsRepository {
   LikedCatsRepositoryImpl({SharedPreferences? prefs}) : _prefsForTest = prefs;
 
   LikedCatsRepositoryImpl.forTest(SharedPreferences prefs)
-      : _prefsForTest = prefs;
+    : _prefsForTest = prefs;
 
   Future<SharedPreferences> get _prefs async =>
       _prefsForTest ?? await SharedPreferences.getInstance();
